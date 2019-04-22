@@ -84,11 +84,12 @@ bool	GateControl::AddAuthorization(CardNumber number, const string& name,
 	//	EXECUTABLE STATEMENTS
 	if (authorizationMap_.find(number) == authorizationMap_.end()){ //number doesn't exist in map
 		authorizationMap_[number] = newAuth;
+			//authorizationVector.push_back(newAuth);
 		return true;
 	} else {
 		return false;
 	}
-	//authorizationVector.push_back(newAuth);
+
 }
 
 //****************************************************************************************
