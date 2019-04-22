@@ -6,7 +6,7 @@
 #include	<iostream>
 #include <map>
 #include	"GateControl.hpp"
-
+#include <algorithm>
 using namespace std;
 
 //****************************************************************************************
@@ -164,7 +164,8 @@ void	GateControl::GetAllTransactions(TransactionVector& transactionVector)
 
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	transactionVector;
+	for (auto elem : transactionVector_)
+		transactionVector.push_back(elem);
 
 	return;
 }
@@ -178,14 +179,14 @@ bool	GateControl::GetCardAuthorization(CardNumber number, Authorization& authori
 {
 	//************************************************************************************
 	//	LOCAL DATA
-
+AuthorizationMap::iterator it = authorizationMap_.find(number);
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
 	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else {
 		if (AccessAllowed(number) == true) {
-			authorization;
+			authorization = it->second;
 			return true;
 		} else { return false; }
 
@@ -196,20 +197,22 @@ bool	GateControl::GetCardAuthorization(CardNumber number, Authorization& authori
 //****************************************************************************************
 //
 //	GateControl::GetCardTransactions
-//
+// 
 //****************************************************************************************
 bool	GateControl::GetCardTransactions(CardNumber number,
 										 TransactionVector& transactionVector)
 {
 	//************************************************************************************
 	//	LOCAL DATA
-
+TransactionVector::iterator it = find (transactionVector_.begin(),
+																	transactionVector_.end(), number);
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
-		return false;
-	else {
-		&transactionVector;
+
+	if (it != transactionVector_.end()) {
+		transactionVector = transactionVector_;
 		return true;
+	} else { //number doesn't exist
+		return false;
 	}
 }
