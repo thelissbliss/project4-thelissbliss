@@ -51,19 +51,19 @@ bool	GateControl::AccessAllowed(CardNumber number)
 {
 	//************************************************************************************
 	//	LOCAL DATA
+AuthorizationMap::iterator it = authorizationMap_.find(number);
 
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
 	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
-	else return true;
-		//does number have access
-		/*
-		if ()
-			return true;
-		else
-			return false;
-			*/
+	else if ( (it->second.startTime_ < gCurrentTime) && (it->second.endTime_ > gCurrentTime) )
+		return true;
+
+	Transaction newT(number, number, it->second.name_, it->second.startTime_,
+								it->second.endTime_);
+	transactionVector_.push_back(newT);
+
 }
 
 //****************************************************************************************
@@ -79,11 +79,11 @@ bool	GateControl::AddAuthorization(CardNumber number, const string& name,
 	Authorization newAuth(number, name, startTime, endTime);
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
-		return false;
-	else {
+	if (authorizationMap_.find(number) == authorizationMap_.end()){ //number doesn't exist in map
 		authorizationMap_[number] = newAuth;
 		return true;
+	} else {
+		return false;
 	}
 	//authorizationVector.push_back(newAuth);
 }
@@ -160,7 +160,7 @@ void	GateControl::GetAllTransactions(TransactionVector& transactionVector)
 
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	cout << &transactionVector;
+	&transactionVector;
 
 	return;
 }
@@ -181,7 +181,7 @@ bool	GateControl::GetCardAuthorization(CardNumber number, Authorization& authori
 		return false;
 	else {
 		if (AccessAllowed(number) == true) {
-			cout << &authorization;
+			&authorization;
 			return true;
 		}
 	}
