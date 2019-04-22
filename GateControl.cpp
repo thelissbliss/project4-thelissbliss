@@ -184,8 +184,13 @@ bool	GateControl::GetCardAuthorization(CardNumber number, Authorization& authori
 	//	EXECUTABLE STATEMENTS
 	if (it == authMap.end()) //number doesn't exist in map
 		return false;
-	else
-		return true;
+	else {
+		if (AccessAllowed(number) == true) {
+			cout << &authorization;
+			return true;
+		}
+	}
+
 }
 
 //****************************************************************************************
