@@ -55,14 +55,17 @@ AuthorizationMap::iterator it = authorizationMap_.find(number);
 
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
-		return false;
-	else if ( (it->second.startTime_ < gCurrentTime) && (it->second.endTime_ > gCurrentTime) )
-		return true;
+	if (authorizationMap_.find(number) == authorizationMap_.end()) { //non-existant
+			Transaction newT(number, it->second.name_, gCurrentDate, gCurrentTime, false);
+				transactionVector_.push_back(newT);
+			return false;
+	}
 
-	Transaction newT(number, number, it->second.name_, it->second.startTime_,
-								it->second.endTime_);
-	transactionVector_.push_back(newT);
+	else if ( (it->second.startTime_ < gCurrentTime) && (it->second.endTime_ > gCurrentTime) ) {
+			Transaction newT(number, it->second.name_, gCurrentDate, gCurrentTime, true);
+				transactionVector_.push_back(newT);
+			return true;
+	}
 
 }
 
