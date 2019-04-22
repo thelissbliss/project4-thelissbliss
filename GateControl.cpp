@@ -187,7 +187,8 @@ bool	GateControl::GetCardAuthorization(CardNumber number, Authorization& authori
 		if (AccessAllowed(number) == true) {
 			&authorization;
 			return true;
-		}
+		} else { return false; }
+
 	}
 
 }
@@ -208,5 +209,6 @@ bool	GateControl::GetCardTransactions(CardNumber number,
 	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else
+		&transactionVector;
 		return true;
 }
