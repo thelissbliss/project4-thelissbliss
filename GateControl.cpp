@@ -147,7 +147,7 @@ void	GateControl::GetAllAuthorizations(AuthorizationVector& authorizationVector)
 
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	cout << &authorizationVector;
+	&authorizationVector;
 
 	return;
 }
