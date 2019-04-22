@@ -18,11 +18,7 @@ using namespace std;
 //****************************************************************************************
 //
 //	CLASSES, TYPEDEFS AND STRUCTURES
-AuthorizationMap authMap;
-AuthorizationIterator it;
-GateControl gc;
-AuthorizationVector authorizationVector;
-TransactionVector transactionVector;
+
 //****************************************************************************************
 
 //****************************************************************************************
@@ -55,11 +51,10 @@ bool	GateControl::AccessAllowed(CardNumber number)
 {
 	//************************************************************************************
 	//	LOCAL DATA
-	it = authMap.find(number);
 
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (it == authMap.end()) //number doesn't exist in map
+	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else return true;
 		//does number have access
@@ -84,13 +79,13 @@ bool	GateControl::AddAuthorization(CardNumber number, const string& name,
 	Authorization newAuth(number, name, startTime, endTime);
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (it == authMap.end()) //number doesn't exist in map
+	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else {
-		authMap.insert(pair<CardNumber, Authorization>(number, newAuth));
+		authorizationMap_[number] = newAuth;
 		return true;
 	}
-	authorizationVector.push_back(newAuth);
+	//authorizationVector.push_back(newAuth);
 }
 
 //****************************************************************************************
@@ -103,14 +98,14 @@ bool	GateControl::ChangeAuthorization(CardNumber number, const string& name,
 {
 	//************************************************************************************
 	//	LOCAL DATA
-	it = authMap.find(number);
+
 	Authorization changeAuth(number, name, startTime, endTime);
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (it == authMap.end()) //number doesn't exist in map
+	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else {
-			authMap[number] = changeAuth;
+			authorizationMap_[number] = changeAuth;
 			return true;
 		}
 }
@@ -124,13 +119,13 @@ bool	GateControl::DeleteAuthorization(CardNumber number)
 {
 	//************************************************************************************
 	//	LOCAL DATA
-	it = authMap.find(number);
+
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (it == authMap.end()) //number doesn't exist in map
+	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else {
-		authMap.erase (it);
+		authorizationMap_.erase (authorizationMap_.find(number));
 		return true;
 	}
 }
@@ -182,7 +177,7 @@ bool	GateControl::GetCardAuthorization(CardNumber number, Authorization& authori
 
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (it == authMap.end()) //number doesn't exist in map
+	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else {
 		if (AccessAllowed(number) == true) {
@@ -206,7 +201,7 @@ bool	GateControl::GetCardTransactions(CardNumber number,
 
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-	if (it == authMap.end()) //number doesn't exist in map
+	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else
 		return true;
