@@ -204,7 +204,7 @@ bool	GateControl::GetCardTransactions(CardNumber number,
 {
 	//************************************************************************************
 	//	LOCAL DATA
-	int i = 0;
+
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
 	for (auto i=0; i < transactionVector_.size(); i++) {
