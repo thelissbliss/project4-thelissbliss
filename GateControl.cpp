@@ -185,11 +185,8 @@ AuthorizationMap::iterator it = authorizationMap_.find(number);
 	if (authorizationMap_.find(number) == authorizationMap_.end()) //number doesn't exist in map
 		return false;
 	else {
-		if (AccessAllowed(number) == true) {
 			authorization = it->second;
 			return true;
-		} else { return false; }
-
 	}
 
 }
