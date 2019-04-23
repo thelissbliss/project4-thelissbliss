@@ -208,8 +208,8 @@ bool	GateControl::GetCardTransactions(CardNumber number,
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
 	for (auto i=0; i < transactionVector_.size(); i++) {
-		if (transactionVector_[i] == number)
-			transactionVector = transactionVector_[i];
+		if (transactionVector_[i].number_ == number)
+			transactionVector.push_back(transactionVector_[i]);
 	}
 
 }
