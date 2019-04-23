@@ -197,22 +197,19 @@ AuthorizationMap::iterator it = authorizationMap_.find(number);
 //****************************************************************************************
 //
 //	GateControl::GetCardTransactions
-// 
+//
 //****************************************************************************************
 bool	GateControl::GetCardTransactions(CardNumber number,
 										 TransactionVector& transactionVector)
 {
 	//************************************************************************************
 	//	LOCAL DATA
-TransactionVector::iterator it = find (transactionVector_.begin(),
-																	transactionVector_.end(), number);
+	int i = 0;
 	//************************************************************************************
 	//	EXECUTABLE STATEMENTS
-
-	if (it != transactionVector_.end()) {
-		transactionVector = transactionVector_;
-		return true;
-	} else { //number doesn't exist
-		return false;
+	for (auto i=0; i < transactionVector_.size(); i++) {
+		if (transactionVector_[i] == number)
+			transactionVector = transactionVector_[i];
 	}
+
 }
