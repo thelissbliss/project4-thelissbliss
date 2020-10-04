@@ -1,6 +1,8 @@
-# Project 4 - Gate Control
-### CSUF CPSC 131, Spring 2019
+# Gate Controller
 
-MUST EDIT WITH YOUR OWN NAME AND EMAIL IN THE SAME FORMAT
+Gate control system.
+Language: C++
 
-Alyssa Bright alyssabright@csu.fullerton.edu
+Credit:
+- Alyssa Bright
+- Project for coursework at CSUF
